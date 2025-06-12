@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quer namorar comigo?</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 5vh 5vw;
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fce4ec, #f8bbd0, #e1bee7);
+      position: relative;
+      height: 100vh;
+    }
+
+    #typing {
+      color: #d81b60;
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+      z-index: 1;
+      position: relative;
+      min-height: 80px;
+    }
+
+    #buttons {
+      position: relative;
+      height: 200px;
+      z-index: 1;
+    }
+
+    button {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      max-width: 80vw;
+    }
+
+    #yes {
+      background-color: #81c784;
+      color: white;
+      position: relative;
+      z-index: 1;
+    }
+
+    #no {
+      background-color: #e57373;
+      color: white;
+      position: absolute;
+      left: 60%;
+      top: 60px;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
+      background-size: contain;
+      animation: float 10s linear infinite;
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    #finalMessage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 240, 245, 0.95);
+      color: #d81b60;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      display: none;
+      flex-direction: column;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (min-width: 600px) {
+      button {
+        font-size: 1.2rem;
+        padding: 15px 30px;
+      }
+
+      #finalMessage {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="typing"></div>
+
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+    Seu navegador não suporta áudio.
+  </audio>
+
+  <audio id="clickSound">
+    <source src="https://www.soundjay.com/buttons/sounds/button-16.mp3" type="audio/mp3">
+  </audio>
+
+  <div id="buttons">
+    <button id="yes">Sim</button>
+    <button id="no">Não</button>
+  </div>
+
+  <div id="finalMessage">
+    💖 SIM ACEITO! 💖<br>
+    Agora é oficial: te quero para sempre! 💘
+  </div>
+
+  <script>
+    const message = "Luísa Flach Bohn, nesse mesmo dia ano que vem nós já estaremos namorando oficialmente? 💖";
+    const typingElement = document.getElementById("typing");
+    let i = 0;
+
+    function typeWriter() {
+      if (i < message.length) {
+        typingElement.innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+
+    typeWriter();
+
+    const noBtn = document.getElementById('no');
+    noBtn.addEventListener('mouseover', () => {
+      const padding = 50;
+      const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+      const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+      const x = Math.floor(Math.random() * maxX);
+      const y = Math.floor(Math.random() * maxY);
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    });
+
+    const yesBtn = document.getElementById('yes');
+    const finalMessage = document.getElementById('finalMessage');
+    const clickSound = document.getElementById('clickSound');
+
+    yesBtn.addEventListener('click', () => {
+      clickSound.play();
+      setTimeout(() => {
+        finalMessage.style.display = 'flex';
+      }, 300);
+    });
+
+    function createHearts() {
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDelay = Math.random() * 10 + 's';
+        document.body.appendChild(heart);
+      }
+    }
+
+    createHearts();
+  </script>
+
+</body>
+</html>
